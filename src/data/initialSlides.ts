@@ -8,13 +8,15 @@ const defaultColors = {
 };
 
 export const initialSlides: Slide[] = [
-  // SLIDE 1 - Title Slide
+  // SLIDE 1 - Title Slide (with video placeholder)
   {
     id: 1,
     title: 'עיצוב הבית: שלווה ושלום',
     subtitle: 'יצירת מרחב המזין את הנפש והרוח',
     layout: 'title-slide',
-    content: {},
+    content: {
+      videoUrl: '', // הוסיפי כאן קישור לסרטון מוטמע (YouTube embed URL)
+    },
     colors: { ...defaultColors, bodyText: '#7F8C8D' },
   },
   // SLIDE 2 - The Serenity Prayer

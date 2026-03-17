@@ -17,8 +17,6 @@ interface PresentationContextType extends PresentationState {
   addSlide: (slide: Slide) => void;
   deleteSlide: (id: number) => void;
   currentSlide: Slide;
-  unlockEdit: (password: string) => Promise<boolean>;
-  lockEdit: () => void;
 }
 
 const PresentationContext = createContext<PresentationContextType | null>(null);
@@ -28,7 +26,6 @@ const DARK_KEY = 'serenity-dark-mode';
 export function PresentationProvider({ children }: { children: React.ReactNode }) {
   const [slides, setSlides] = useState<Slide[]>(initialSlides);
   const [presentationId, setPresentationId] = useState<string | null>(null);
-  const [isUnlocked, setIsUnlocked] = useState(false);
   const [loading, setLoading] = useState(true);
   const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
   const [isDesignMode, setIsDesignMode] = useState(false);
@@ -64,33 +61,8 @@ export function PresentationProvider({ children }: { children: React.ReactNode }
     }
   }
 
-  const unlockEdit = useCallback(async (password: string): Promise<boolean> => {
-    try {
-      const { data, error } = await supabase
-        .from('app_settings')
-        .select('value')
-        .eq('key', 'edit_password')
-        .single();
-
-      if (error) throw error;
-      if (data && data.value === password) {
-        setIsUnlocked(true);
-        return true;
-      }
-      return false;
-    } catch {
-      return false;
-    }
-  }, []);
-
-  const lockEdit = useCallback(() => {
-    setIsUnlocked(false);
-    setIsDesignMode(false);
-  }, []);
-
-  // Save slides to DB with debounce
   const saveToDb = useCallback((newSlides: Slide[]) => {
-    if (!presentationId || !isUnlocked) return;
+    if (!presentationId) return;
     if (saveTimer.current) clearTimeout(saveTimer.current);
     saveTimer.current = setTimeout(async () => {
       const { error } = await supabase
@@ -102,7 +74,7 @@ export function PresentationProvider({ children }: { children: React.ReactNode }
         toast.error('שגיאה בשמירה');
       }
     }, 800);
-  }, [presentationId, isUnlocked]);
+  }, [presentationId]);
 
   useEffect(() => {
     localStorage.setItem(DARK_KEY, String(isDarkMode));
@@ -143,7 +115,7 @@ export function PresentationProvider({ children }: { children: React.ReactNode }
     setCurrentSlideIndex(i => Math.min(i, slides.length - 2));
   }, [slides.length, saveToDb]);
 
-  const isOwner = isUnlocked;
+  const isOwner = true;
   const currentSlide = slides[currentSlideIndex] || slides[0];
 
   return (
@@ -165,8 +137,6 @@ export function PresentationProvider({ children }: { children: React.ReactNode }
         addSlide,
         deleteSlide,
         currentSlide,
-        unlockEdit,
-        lockEdit,
       }}
     >
       {children}

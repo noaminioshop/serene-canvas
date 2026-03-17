@@ -1,8 +1,8 @@
-import { Sun, Moon, Pencil, Eye, Maximize, ChevronRight, ChevronLeft, LayoutGrid, Settings, LogIn, LogOut } from 'lucide-react';
+import { useState } from 'react';
+import { Sun, Moon, Pencil, Eye, Maximize, ChevronRight, ChevronLeft, LayoutGrid, Settings, Lock, Unlock } from 'lucide-react';
 import { usePresentation } from '@/context/PresentationContext';
-import { useAuth } from '@/context/AuthContext';
 import { useIsMobile } from '@/hooks/use-mobile';
-import { useNavigate } from 'react-router-dom';
+import { toast } from 'sonner';
 
 interface ToolbarProps {
   onOpenThumbnails?: () => void;
@@ -10,16 +10,28 @@ interface ToolbarProps {
 }
 
 export function Toolbar({ onOpenThumbnails, onOpenEditor }: ToolbarProps) {
-  const { isDarkMode, toggleDarkMode, isDesignMode, toggleDesignMode, currentSlideIndex, slides, isOwner } = usePresentation();
-  const { user, signOut } = useAuth();
+  const { isDarkMode, toggleDarkMode, isDesignMode, toggleDesignMode, currentSlideIndex, slides, isOwner, unlockEdit, lockEdit } = usePresentation();
   const isMobile = useIsMobile();
-  const navigate = useNavigate();
+  const [showPasswordInput, setShowPasswordInput] = useState(false);
+  const [password, setPassword] = useState('');
 
   const handleFullscreen = () => {
     if (!document.fullscreenElement) {
       document.documentElement.requestFullscreen();
     } else {
       document.exitFullscreen();
+    }
+  };
+
+  const handleUnlock = async () => {
+    if (!password) return;
+    const success = await unlockEdit(password);
+    if (success) {
+      toast.success('נפתח לעריכה');
+      setShowPasswordInput(false);
+      setPassword('');
+    } else {
+      toast.error('סיסמה שגויה');
     }
   };
 
@@ -61,13 +73,32 @@ export function Toolbar({ onOpenThumbnails, onOpenEditor }: ToolbarProps) {
             {isDesignMode ? <Eye size={18} /> : <Pencil size={18} />}
           </button>
         )}
-        {user ? (
-          <button onClick={signOut} className="p-2 rounded-lg hover:bg-muted transition-colors text-muted-foreground hover:text-foreground" title="התנתק">
-            <LogOut size={18} />
+        {isOwner ? (
+          <button onClick={lockEdit} className="p-2 rounded-lg hover:bg-muted transition-colors text-muted-foreground hover:text-foreground" title="נעל עריכה">
+            <Unlock size={18} />
           </button>
+        ) : showPasswordInput ? (
+          <div className="flex items-center gap-1">
+            <input
+              type="password"
+              value={password}
+              onChange={e => setPassword(e.target.value)}
+              onKeyDown={e => e.key === 'Enter' && handleUnlock()}
+              placeholder="סיסמה"
+              className="w-20 md:w-24 h-7 px-2 text-xs rounded-md border border-input bg-background text-foreground placeholder:text-muted-foreground"
+              autoFocus
+              dir="ltr"
+            />
+            <button onClick={handleUnlock} className="p-1.5 rounded-lg hover:bg-muted transition-colors text-muted-foreground hover:text-foreground text-xs font-medium">
+              ✓
+            </button>
+            <button onClick={() => { setShowPasswordInput(false); setPassword(''); }} className="p-1.5 rounded-lg hover:bg-muted transition-colors text-muted-foreground hover:text-foreground text-xs">
+              ✕
+            </button>
+          </div>
         ) : (
-          <button onClick={() => navigate('/auth')} className="p-2 rounded-lg hover:bg-muted transition-colors text-muted-foreground hover:text-foreground" title="התחבר לעריכה">
-            <LogIn size={18} />
+          <button onClick={() => setShowPasswordInput(true)} className="p-2 rounded-lg hover:bg-muted transition-colors text-muted-foreground hover:text-foreground" title="פתח לעריכה">
+            <Lock size={18} />
           </button>
         )}
       </div>

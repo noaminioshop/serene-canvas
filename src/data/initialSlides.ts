@@ -199,9 +199,48 @@ export const initialSlides: Slide[] = [
     },
     colors: { ...defaultColors, bodyText: '#7F8C8D' },
   },
-  // SLIDE 11 - From Stress to Serenity: Comparison
+  // SLIDE 11 - Morning Routine Checklist
   {
     id: 11,
+    title: 'שגרת הבוקר של המלכה ⚜️',
+    subtitle: 'הטיפים שלי לבית מסודר ומלא אנרגיה',
+    layout: 'checklist' as const,
+    content: {
+      checklistItems: [
+        'לקום בבוקר להודות, לסדר את המיטה',
+        'נכנסים לצחצח, לאסוף בגדים ושערות, שירותים נקיים',
+        'לעבור למטבח – משטח נקי, אח״כ כיור',
+        'שולחנות בלי כלים, משטחים פנויים',
+        'ריצפה פנויה – ככה לנקות זה הרבה יותר קל',
+        'לפתוח חלונות, לאוורר את הבית, שהשמש תיכנס',
+        'להפעיל מוזיקה נעימה ומשמחת',
+        'להשקות עציצים',
+        'ספה מסודרת, לנער כריות',
+        'למלא מה שצריך: נייר טואלט, נייר למטבח',
+        'להכניס כביסה – מה שקטן למייבש, מה שגדול לתלות',
+        'איך שמורידה – מקפלת ומחלקת לחדרים',
+        'לטאטא / שואב / מגבון זריז',
+        'להדליק נר, לטהר עם מרווה, פאולו סנטו, קטורת',
+        'יום קסום בממלכה של המלכה ⚜️',
+      ],
+    },
+    colors: { ...defaultColors },
+  },
+  // SLIDE 12 - Rosh Chodesh Nisan
+  {
+    id: 12,
+    title: 'ראש חודש ניסן',
+    subtitle: 'חודש של חירות, התחדשות ואביב',
+    layout: 'full-image',
+    content: {
+      bodyText: 'ניסן – חודש הגאולה, חודש האביב. זמן של התחלות חדשות, ניקיון הבית והנפש.',
+      imageUrl: 'https://images.unsplash.com/photo-1490750967868-88aa4f44baee?w=800',
+    },
+    colors: { ...defaultColors },
+  },
+  // SLIDE 13 - From Stress to Serenity: Comparison
+  {
+    id: 13,
     title: 'מסטרס לשלווה: השוואה',
     layout: 'comparison-table',
     content: {
@@ -215,9 +254,9 @@ export const initialSlides: Slide[] = [
     },
     colors: { ...defaultColors },
   },
-  // SLIDE 12 - Closing Slide
+  // SLIDE 14 - Closing Slide
   {
-    id: 12,
+    id: 14,
     title: 'שלום',
     subtitle: 'מתחיל מבפנים, מוקרן החוצה',
     layout: 'closing',
@@ -230,9 +269,9 @@ export const initialSlides: Slide[] = [
     },
     colors: { ...defaultColors, titleText: '#8FAD88', bodyText: '#7F8C8D' },
   },
-  // SLIDE 13 - Image Sources
+  // SLIDE 15 - Image Sources
   {
-    id: 13,
+    id: 15,
     title: 'Image Sources',
     layout: 'closing',
     content: {

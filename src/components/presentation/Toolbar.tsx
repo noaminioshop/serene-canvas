@@ -80,11 +80,11 @@ export function SlideNavigation() {
   return (
     <div className="h-12 md:h-14 flex items-center justify-between px-4 md:px-6 bg-card/80 backdrop-blur-xl border-t border-border/50 shrink-0">
       <button
-        onClick={nextSlide}
-        disabled={currentSlideIndex >= slides.length - 1}
+        onClick={prevSlide}
+        disabled={currentSlideIndex <= 0}
         className="flex items-center gap-1.5 px-3 md:px-4 py-1.5 md:py-2 rounded-lg bg-secondary/50 hover:bg-secondary text-secondary-foreground disabled:opacity-30 transition-colors text-xs md:text-sm font-medium"
       >
-        הבא <ChevronLeft size={16} />
+        <ChevronRight size={16} /> הקודם
       </button>
       <div className="flex gap-1">
         {slides.map((_, i) => (
@@ -97,11 +97,11 @@ export function SlideNavigation() {
         ))}
       </div>
       <button
-        onClick={prevSlide}
-        disabled={currentSlideIndex <= 0}
+        onClick={nextSlide}
+        disabled={currentSlideIndex >= slides.length - 1}
         className="flex items-center gap-1.5 px-3 md:px-4 py-1.5 md:py-2 rounded-lg bg-secondary/50 hover:bg-secondary text-secondary-foreground disabled:opacity-30 transition-colors text-xs md:text-sm font-medium"
       >
-        <ChevronRight size={16} /> הקודם
+        הבא <ChevronLeft size={16} />
       </button>
     </div>
   );

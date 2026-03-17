@@ -25,6 +25,8 @@ export interface SlideContent {
   tableHeaders?: string[];
   tableRows?: string[][];
   contactInfo?: string[];
+  checklistItems?: string[];
+  videoUrl?: string;
 }
 
 export interface Slide {

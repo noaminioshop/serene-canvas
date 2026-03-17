@@ -46,7 +46,7 @@ function MobileEditorDrawer({ open, onClose }: { open: boolean; onClose: () => v
 }
 
 function PresentationView() {
-  const { currentSlide, currentSlideIndex, nextSlide, prevSlide, isDesignMode } = usePresentation();
+  const { currentSlide, currentSlideIndex, nextSlide, prevSlide, isDesignMode, isOwner, loading } = usePresentation();
   const isMobile = useIsMobile();
   const [showThumbnails, setShowThumbnails] = useState(false);
   const [showEditor, setShowEditor] = useState(false);

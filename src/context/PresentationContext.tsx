@@ -1,8 +1,14 @@
-import React, { createContext, useContext, useEffect, useState, useCallback } from 'react';
+import React, { createContext, useContext, useEffect, useState, useCallback, useRef } from 'react';
 import { Slide, PresentationState } from '@/types/slides';
 import { initialSlides } from '@/data/initialSlides';
+import { supabase } from '@/integrations/supabase/client';
+import { useAuth } from '@/context/AuthContext';
+import { toast } from 'sonner';
 
 interface PresentationContextType extends PresentationState {
+  presentationId: string | null;
+  isOwner: boolean;
+  loading: boolean;
   setCurrentSlideIndex: (i: number) => void;
   nextSlide: () => void;
   prevSlide: () => void;
@@ -16,28 +22,81 @@ interface PresentationContextType extends PresentationState {
 
 const PresentationContext = createContext<PresentationContextType | null>(null);
 
-const STORAGE_KEY = 'serenity-presentation-slides';
 const DARK_KEY = 'serenity-dark-mode';
 
-function loadSlides(): Slide[] {
-  try {
-    const stored = localStorage.getItem(STORAGE_KEY);
-    if (stored) return JSON.parse(stored);
-  } catch {}
-  return initialSlides;
-}
-
 export function PresentationProvider({ children }: { children: React.ReactNode }) {
-  const [slides, setSlides] = useState<Slide[]>(loadSlides);
+  const { user } = useAuth();
+  const [slides, setSlides] = useState<Slide[]>(initialSlides);
+  const [presentationId, setPresentationId] = useState<string | null>(null);
+  const [loading, setLoading] = useState(true);
   const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
   const [isDesignMode, setIsDesignMode] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(() => {
     try { return localStorage.getItem(DARK_KEY) === 'true'; } catch { return false; }
   });
+  const saveTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
+  // Load presentation from DB
   useEffect(() => {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(slides));
-  }, [slides]);
+    loadPresentation();
+  }, [user]);
+
+  async function loadPresentation() {
+    setLoading(true);
+    try {
+      // Try to get the first presentation (we'll use a single-presentation model)
+      const { data, error } = await supabase
+        .from('presentations')
+        .select('*')
+        .order('created_at', { ascending: true })
+        .limit(1)
+        .maybeSingle();
+
+      if (error) throw error;
+
+      if (data) {
+        setPresentationId(data.id);
+        setSlides(data.slides as unknown as Slide[]);
+      } else if (user) {
+        // Create initial presentation for this user
+        const { data: newPres, error: insertErr } = await supabase
+          .from('presentations')
+          .insert({
+            user_id: user.id,
+            title: 'עיצוב הבית: שלווה ושלום',
+            slides: initialSlides as unknown as any,
+          })
+          .select()
+          .single();
+
+        if (insertErr) throw insertErr;
+        if (newPres) {
+          setPresentationId(newPres.id);
+          setSlides(newPres.slides as unknown as Slide[]);
+        }
+      }
+    } catch (err: any) {
+      console.error('Failed to load presentation:', err);
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  // Save slides to DB with debounce
+  const saveToDb = useCallback((newSlides: Slide[]) => {
+    if (!presentationId || !user) return;
+    if (saveTimer.current) clearTimeout(saveTimer.current);
+    saveTimer.current = setTimeout(async () => {
+      const { error } = await supabase
+        .from('presentations')
+        .update({ slides: newSlides as unknown as any })
+        .eq('id', presentationId);
+      if (error) {
+        console.error('Save error:', error);
+        toast.error('שגיאה בשמירה');
+      }
+    }, 800);
+  }, [presentationId, user]);
 
   useEffect(() => {
     localStorage.setItem(DARK_KEY, String(isDarkMode));
@@ -53,22 +112,32 @@ export function PresentationProvider({ children }: { children: React.ReactNode }
   }, []);
 
   const updateSlide = useCallback((id: number, updates: Partial<Slide>) => {
-    setSlides(prev => prev.map(s => s.id === id ? { ...s, ...updates } : s));
-  }, []);
+    setSlides(prev => {
+      const next = prev.map(s => s.id === id ? { ...s, ...updates } : s);
+      saveToDb(next);
+      return next;
+    });
+  }, [saveToDb]);
 
   const addSlide = useCallback((slide: Slide) => {
-    setSlides(prev => [...prev, slide]);
-  }, []);
+    setSlides(prev => {
+      const next = [...prev, slide];
+      saveToDb(next);
+      return next;
+    });
+  }, [saveToDb]);
 
   const deleteSlide = useCallback((id: number) => {
     setSlides(prev => {
       const next = prev.filter(s => s.id !== id);
       if (next.length === 0) return prev;
+      saveToDb(next);
       return next;
     });
     setCurrentSlideIndex(i => Math.min(i, slides.length - 2));
-  }, [slides.length]);
+  }, [slides.length, saveToDb]);
 
+  const isOwner = !!(user && presentationId);
   const currentSlide = slides[currentSlideIndex] || slides[0];
 
   return (
@@ -78,6 +147,9 @@ export function PresentationProvider({ children }: { children: React.ReactNode }
         currentSlideIndex,
         isDesignMode,
         isDarkMode,
+        presentationId,
+        isOwner,
+        loading,
         setCurrentSlideIndex,
         nextSlide,
         prevSlide,

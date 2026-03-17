@@ -18,11 +18,25 @@ export function TitleSlide({ slide }: { slide: Slide }) {
       />
       {slide.subtitle && (
         <h2
-          className="font-light"
+          className="font-light mb-8"
           style={{ color: slide.colors.bodyText }}
         >
           {slide.subtitle}
         </h2>
+      )}
+      {slide.content.videoUrl ? (
+        <div className="w-[800px] aspect-video rounded-2xl overflow-hidden shadow-lg">
+          <iframe
+            src={slide.content.videoUrl}
+            className="w-full h-full"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowFullScreen
+          />
+        </div>
+      ) : (
+        !slide.content.videoUrl && slide.content.bodyText && (
+          <p style={{ color: slide.colors.bodyText }}>{slide.content.bodyText}</p>
+        )
       )}
     </div>
   );

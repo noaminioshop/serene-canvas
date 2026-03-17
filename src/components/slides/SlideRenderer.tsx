@@ -6,6 +6,7 @@ import { QuoteSlide } from './layouts/QuoteSlide';
 import { ComparisonTableSlide } from './layouts/ComparisonTableSlide';
 import { FullImageSlide } from './layouts/FullImageSlide';
 import { ClosingSlide } from './layouts/ClosingSlide';
+import { ChecklistSlide } from './layouts/ChecklistSlide';
 
 export function SlideRenderer({ slide }: { slide: Slide }) {
   const layoutMap: Record<string, React.FC<{ slide: Slide }>> = {
@@ -16,6 +17,7 @@ export function SlideRenderer({ slide }: { slide: Slide }) {
     'comparison-table': ComparisonTableSlide,
     'full-image': FullImageSlide,
     'closing': ClosingSlide,
+    'checklist': ChecklistSlide,
   };
 
   const Layout = layoutMap[slide.layout] || TitleSlide;

@@ -11,6 +11,7 @@ const layoutOptions: { value: SlideLayout; label: string }[] = [
   { value: 'comparison-table', label: 'טבלת השוואה' },
   { value: 'full-image', label: 'תמונה מלאה' },
   { value: 'closing', label: 'סיום' },
+  { value: 'checklist', label: 'צ\'קליסט' },
 ];
 
 export function SlideEditor({ mobile }: { mobile?: boolean }) {
@@ -59,6 +60,16 @@ export function SlideEditor({ mobile }: { mobile?: boolean }) {
       <div>
         <label className={labelClass}>נקודות (שורה לכל נקודה)</label>
         <textarea className={`${inputClass} min-h-[80px]`} value={(slide.content.bulletPoints || []).join('\n')} onChange={e => updateContent('bulletPoints', e.target.value.split('\n'))} dir="rtl" />
+      </div>
+      {slide.layout === 'checklist' && (
+        <div>
+          <label className={labelClass}>פריטים בצ'קליסט (שורה לכל פריט)</label>
+          <textarea className={`${inputClass} min-h-[120px]`} value={(slide.content.checklistItems || []).join('\n')} onChange={e => updateContent('checklistItems', e.target.value.split('\n'))} dir="rtl" />
+        </div>
+      )}
+      <div>
+        <label className={labelClass}>קישור לסרטון (YouTube / Vimeo)</label>
+        <input className={inputClass} value={slide.content.videoUrl || ''} onChange={e => updateContent('videoUrl', e.target.value)} dir="ltr" placeholder="https://www.youtube.com/embed/..." />
       </div>
       {slide.layout === 'quote' && (
         <>

@@ -131,7 +131,7 @@ function PresentationView() {
             </motion.div>
           </AnimatePresence>
         </div>
-        {isDesignMode && <SlideEditor />}
+        {isDesignMode && isOwner && <SlideEditor />}
       </div>
       <SlideNavigation />
     </div>

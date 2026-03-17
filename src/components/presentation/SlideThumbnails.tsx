@@ -3,9 +3,11 @@ import { ScaledSlide } from '@/components/slides/ScaledSlide';
 import { SlideRenderer } from '@/components/slides/SlideRenderer';
 import { Plus, Trash2 } from 'lucide-react';
 import { SlideLayout } from '@/types/slides';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 export function SlideThumbnails() {
   const { slides, currentSlideIndex, setCurrentSlideIndex, addSlide, deleteSlide } = usePresentation();
+  const isMobile = useIsMobile();
 
   const handleAddSlide = () => {
     const newId = Math.max(...slides.map(s => s.id)) + 1;
@@ -26,7 +28,7 @@ export function SlideThumbnails() {
   };
 
   return (
-    <div className="w-56 bg-card border-l border-border/50 flex flex-col shrink-0">
+    <div className={isMobile ? 'flex flex-col h-full' : 'w-56 bg-card border-l border-border/50 flex flex-col shrink-0'}>
       <div className="p-3 flex gap-2 border-b border-border/50">
         <button
           onClick={handleAddSlide}

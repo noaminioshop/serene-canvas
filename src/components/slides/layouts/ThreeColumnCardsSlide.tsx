@@ -18,10 +18,10 @@ export function ThreeColumnCardsSlide({ slide }: { slide: Slide }) {
         {cards.map((card, i) => (
           <div
             key={i}
-            className="flex-1 rounded-3xl p-10 flex flex-col items-center text-center shadow-lg transition-transform hover:scale-[1.02]"
+            className="flex-1 rounded-3xl p-10 flex flex-col items-center text-center transition-transform hover:scale-[1.02]"
             style={{
-              backgroundColor: `${slide.colors.accentColor}15`,
-              border: `2px solid ${slide.colors.accentColor}30`,
+              backgroundColor: slide.colors.background,
+              border: `1.5px solid ${slide.colors.accentColor}40`,
             }}
           >
             {card.icon && <span className="text-[64px] mb-6">{card.icon}</span>}

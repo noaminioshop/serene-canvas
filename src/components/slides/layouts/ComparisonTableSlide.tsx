@@ -15,7 +15,7 @@ export function ComparisonTableSlide({ slide }: { slide: Slide }) {
         )}
       </div>
       <div className="flex-1 flex items-center justify-center px-20 pb-16">
-        <div className="w-full max-w-[1400px] rounded-3xl overflow-hidden shadow-xl" style={{ border: `2px solid ${slide.colors.accentColor}30` }}>
+        <div className="w-full max-w-[1400px] rounded-3xl overflow-hidden" style={{ border: `1.5px solid ${slide.colors.accentColor}40` }}>
           <div className="grid" style={{ gridTemplateColumns: `repeat(${headers.length}, 1fr)` }}>
             {headers.map((h, i) => (
               <div key={i} className="px-8 py-6 font-bold text-center" style={{ backgroundColor: slide.colors.accentColor, color: '#fff', fontSize: 30 }}>

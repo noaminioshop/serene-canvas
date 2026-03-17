@@ -114,7 +114,7 @@ function PresentationView() {
     <div className="h-screen flex flex-col overflow-hidden" dir="rtl">
       <Toolbar />
       <div className="flex-1 flex min-h-0">
-        {isDesignMode && <SlideThumbnails />}
+        {isDesignMode && isOwner && <SlideThumbnails />}
         <div className="flex-1 flex items-center justify-center bg-muted/30 p-4 min-w-0">
           <AnimatePresence mode="wait">
             <motion.div

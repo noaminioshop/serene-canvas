@@ -1,6 +1,8 @@
-import { Sun, Moon, Pencil, Eye, Maximize, ChevronRight, ChevronLeft, LayoutGrid, Settings } from 'lucide-react';
+import { Sun, Moon, Pencil, Eye, Maximize, ChevronRight, ChevronLeft, LayoutGrid, Settings, LogIn, LogOut } from 'lucide-react';
 import { usePresentation } from '@/context/PresentationContext';
+import { useAuth } from '@/context/AuthContext';
 import { useIsMobile } from '@/hooks/use-mobile';
+import { useNavigate } from 'react-router-dom';
 
 interface ToolbarProps {
   onOpenThumbnails?: () => void;
@@ -8,8 +10,10 @@ interface ToolbarProps {
 }
 
 export function Toolbar({ onOpenThumbnails, onOpenEditor }: ToolbarProps) {
-  const { isDarkMode, toggleDarkMode, isDesignMode, toggleDesignMode, currentSlideIndex, slides } = usePresentation();
+  const { isDarkMode, toggleDarkMode, isDesignMode, toggleDesignMode, currentSlideIndex, slides, isOwner } = usePresentation();
+  const { user, signOut } = useAuth();
   const isMobile = useIsMobile();
+  const navigate = useNavigate();
 
   const handleFullscreen = () => {
     if (!document.fullscreenElement) {
@@ -28,39 +32,23 @@ export function Toolbar({ onOpenThumbnails, onOpenEditor }: ToolbarProps) {
         {currentSlideIndex + 1} / {slides.length}
       </div>
       <div className="flex items-center gap-0.5 md:gap-1">
-        {isMobile && onOpenThumbnails && (
-          <button
-            onClick={onOpenThumbnails}
-            className="p-2 rounded-lg hover:bg-muted transition-colors text-muted-foreground hover:text-foreground"
-            title="שקופיות"
-          >
+        {isMobile && isOwner && onOpenThumbnails && (
+          <button onClick={onOpenThumbnails} className="p-2 rounded-lg hover:bg-muted transition-colors text-muted-foreground hover:text-foreground" title="שקופיות">
             <LayoutGrid size={18} />
           </button>
         )}
-        {isMobile && onOpenEditor && (
-          <button
-            onClick={onOpenEditor}
-            className="p-2 rounded-lg hover:bg-muted transition-colors text-muted-foreground hover:text-foreground"
-            title="עריכה"
-          >
+        {isMobile && isOwner && onOpenEditor && (
+          <button onClick={onOpenEditor} className="p-2 rounded-lg hover:bg-muted transition-colors text-muted-foreground hover:text-foreground" title="עריכה">
             <Settings size={18} />
           </button>
         )}
-        <button
-          onClick={handleFullscreen}
-          className="p-2 rounded-lg hover:bg-muted transition-colors text-muted-foreground hover:text-foreground"
-          title="מסך מלא"
-        >
+        <button onClick={handleFullscreen} className="p-2 rounded-lg hover:bg-muted transition-colors text-muted-foreground hover:text-foreground" title="מסך מלא">
           <Maximize size={18} />
         </button>
-        <button
-          onClick={toggleDarkMode}
-          className="p-2 rounded-lg hover:bg-muted transition-colors text-muted-foreground hover:text-foreground"
-          title={isDarkMode ? 'מצב בהיר' : 'מצב כהה'}
-        >
+        <button onClick={toggleDarkMode} className="p-2 rounded-lg hover:bg-muted transition-colors text-muted-foreground hover:text-foreground" title={isDarkMode ? 'מצב בהיר' : 'מצב כהה'}>
           {isDarkMode ? <Sun size={18} /> : <Moon size={18} />}
         </button>
-        {!isMobile && (
+        {!isMobile && isOwner && (
           <button
             onClick={toggleDesignMode}
             className="p-2 rounded-lg hover:bg-muted transition-colors"
@@ -71,6 +59,15 @@ export function Toolbar({ onOpenThumbnails, onOpenEditor }: ToolbarProps) {
             }}
           >
             {isDesignMode ? <Eye size={18} /> : <Pencil size={18} />}
+          </button>
+        )}
+        {user ? (
+          <button onClick={signOut} className="p-2 rounded-lg hover:bg-muted transition-colors text-muted-foreground hover:text-foreground" title="התנתק">
+            <LogOut size={18} />
+          </button>
+        ) : (
+          <button onClick={() => navigate('/auth')} className="p-2 rounded-lg hover:bg-muted transition-colors text-muted-foreground hover:text-foreground" title="התחבר לעריכה">
+            <LogIn size={18} />
           </button>
         )}
       </div>

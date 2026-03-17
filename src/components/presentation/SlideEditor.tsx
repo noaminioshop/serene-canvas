@@ -11,6 +11,7 @@ const layoutOptions: { value: SlideLayout; label: string }[] = [
   { value: 'comparison-table', label: 'טבלת השוואה' },
   { value: 'full-image', label: 'תמונה מלאה' },
   { value: 'closing', label: 'סיום' },
+  { value: 'checklist', label: 'צ\'קליסט' },
 ];
 
 export function SlideEditor({ mobile }: { mobile?: boolean }) {

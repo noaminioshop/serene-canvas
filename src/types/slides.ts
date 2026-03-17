@@ -5,7 +5,8 @@ export type SlideLayout =
   | 'quote'
   | 'comparison-table'
   | 'full-image'
-  | 'closing';
+  | 'closing'
+  | 'checklist';
 
 export interface SlideColors {
   background: string;

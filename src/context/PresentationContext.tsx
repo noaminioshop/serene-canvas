@@ -16,6 +16,7 @@ interface PresentationContextType extends PresentationState {
   updateSlide: (id: number, updates: Partial<Slide>) => void;
   addSlide: (slide: Slide) => void;
   deleteSlide: (id: number) => void;
+  moveSlide: (fromIndex: number, toIndex: number) => void;
   currentSlide: Slide;
 }
 
@@ -115,6 +116,18 @@ export function PresentationProvider({ children }: { children: React.ReactNode }
     setCurrentSlideIndex(i => Math.min(i, slides.length - 2));
   }, [slides.length, saveToDb]);
 
+  const moveSlide = useCallback((fromIndex: number, toIndex: number) => {
+    setSlides(prev => {
+      if (fromIndex < 0 || fromIndex >= prev.length || toIndex < 0 || toIndex >= prev.length) return prev;
+      const next = [...prev];
+      const [moved] = next.splice(fromIndex, 1);
+      next.splice(toIndex, 0, moved);
+      saveToDb(next);
+      return next;
+    });
+    setCurrentSlideIndex(toIndex);
+  }, [saveToDb]);
+
   const isOwner = true;
   const currentSlide = slides[currentSlideIndex] || slides[0];
 
@@ -136,6 +149,7 @@ export function PresentationProvider({ children }: { children: React.ReactNode }
         updateSlide,
         addSlide,
         deleteSlide,
+        moveSlide,
         currentSlide,
       }}
     >

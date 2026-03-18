@@ -36,11 +36,11 @@ export function FullImageSlide({ slide }: { slide: Slide }) {
       {allImages.length > 0 && (
         <div className={`flex-1 w-full max-w-[1400px] grid ${getGridClass(allImages.length)} gap-6 mb-12`}>
           {allImages.map((url, i) => (
-            <div key={i} className="overflow-hidden rounded-3xl">
+            <div key={i} className="overflow-hidden rounded-3xl flex items-center justify-center">
               <img
                 src={url}
                 alt={`${slide.title} ${i + 1}`}
-                className="w-full h-full object-cover"
+                className="max-w-full max-h-full object-contain"
               />
             </div>
           ))}

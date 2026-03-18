@@ -9,8 +9,17 @@ interface ToolbarProps {
 }
 
 export function Toolbar({ onOpenThumbnails, onOpenEditor }: ToolbarProps) {
-  const { isDarkMode, toggleDarkMode, isDesignMode, toggleDesignMode, currentSlideIndex, slides, isOwner } = usePresentation();
+  const { isDarkMode, toggleDarkMode, isDesignMode, toggleDesignMode, currentSlideIndex, slides, isOwner, exportSlides, importSlides } = usePresentation();
   const isMobile = useIsMobile();
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const handleImport = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      importSlides(file);
+      e.target.value = '';
+    }
+  };
 
   const handleFullscreen = () => {
     if (!document.fullscreenElement) {

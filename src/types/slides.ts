@@ -18,6 +18,7 @@ export interface SlideColors {
 export interface SlideContent {
   bodyText?: string;
   imageUrl?: string;
+  imageUrls?: string[];
   bulletPoints?: string[];
   quoteText?: string;
   quoteAttribution?: string;

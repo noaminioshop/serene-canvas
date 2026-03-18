@@ -1,6 +1,20 @@
 import { Slide } from '@/types/slides';
 
 export function FullImageSlide({ slide }: { slide: Slide }) {
+  // Combine single imageUrl and imageUrls array
+  const allImages = [
+    ...(slide.content.imageUrl ? [slide.content.imageUrl] : []),
+    ...(slide.content.imageUrls || []),
+  ].filter(Boolean);
+
+  const getGridClass = (count: number) => {
+    if (count <= 1) return 'grid-cols-1';
+    if (count === 2) return 'grid-cols-2';
+    if (count === 3) return 'grid-cols-3';
+    if (count === 4) return 'grid-cols-2';
+    return 'grid-cols-3';
+  };
+
   return (
     <div
       className="w-full h-full flex flex-col items-center justify-start pt-16 px-40"
@@ -19,13 +33,17 @@ export function FullImageSlide({ slide }: { slide: Slide }) {
           {slide.content.bodyText}
         </p>
       )}
-      {slide.content.imageUrl && (
-        <div className="flex-1 w-full max-w-[1200px] overflow-hidden rounded-3xl mb-12">
-          <img
-            src={slide.content.imageUrl}
-            alt={slide.title}
-            className="w-full h-full object-cover"
-          />
+      {allImages.length > 0 && (
+        <div className={`flex-1 w-full max-w-[1400px] grid ${getGridClass(allImages.length)} gap-6 mb-12`}>
+          {allImages.map((url, i) => (
+            <div key={i} className="overflow-hidden rounded-3xl">
+              <img
+                src={url}
+                alt={`${slide.title} ${i + 1}`}
+                className="w-full h-full object-cover"
+              />
+            </div>
+          ))}
         </div>
       )}
     </div>

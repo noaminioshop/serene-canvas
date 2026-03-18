@@ -57,6 +57,12 @@ export function SlideEditor({ mobile }: { mobile?: boolean }) {
         <label className={labelClass}>קישור לתמונה</label>
         <input className={inputClass} value={slide.content.imageUrl || ''} onChange={e => updateContent('imageUrl', e.target.value)} dir="ltr" />
       </div>
+      {slide.layout === 'full-image' && (
+        <div>
+          <label className={labelClass}>תמונות נוספות (שורה לכל קישור)</label>
+          <textarea className={`${inputClass} min-h-[80px]`} value={(slide.content.imageUrls || []).join('\n')} onChange={e => updateContent('imageUrls', e.target.value.split('\n').filter(Boolean))} dir="ltr" placeholder="https://example.com/image2.jpg&#10;https://example.com/image3.jpg" />
+        </div>
+      )}
       <div>
         <label className={labelClass}>נקודות (שורה לכל נקודה)</label>
         <textarea className={`${inputClass} min-h-[80px]`} value={(slide.content.bulletPoints || []).join('\n')} onChange={e => updateContent('bulletPoints', e.target.value.split('\n'))} dir="rtl" />

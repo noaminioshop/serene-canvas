@@ -1,5 +1,6 @@
-import { Sun, Moon, Pencil, Eye, Maximize, ChevronRight, ChevronLeft, LayoutGrid, Settings } from 'lucide-react';
+import { Sun, Moon, Pencil, Eye, Maximize, ChevronRight, ChevronLeft, LayoutGrid, Settings, Download, Upload } from 'lucide-react';
 import { usePresentation } from '@/context/PresentationContext';
+import { useRef } from 'react';
 import { useIsMobile } from '@/hooks/use-mobile';
 
 interface ToolbarProps {
@@ -8,8 +9,17 @@ interface ToolbarProps {
 }
 
 export function Toolbar({ onOpenThumbnails, onOpenEditor }: ToolbarProps) {
-  const { isDarkMode, toggleDarkMode, isDesignMode, toggleDesignMode, currentSlideIndex, slides, isOwner } = usePresentation();
+  const { isDarkMode, toggleDarkMode, isDesignMode, toggleDesignMode, currentSlideIndex, slides, isOwner, exportSlides, importSlides } = usePresentation();
   const isMobile = useIsMobile();
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const handleImport = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      importSlides(file);
+      e.target.value = '';
+    }
+  };
 
   const handleFullscreen = () => {
     if (!document.fullscreenElement) {
@@ -38,6 +48,13 @@ export function Toolbar({ onOpenThumbnails, onOpenEditor }: ToolbarProps) {
             <Settings size={18} />
           </button>
         )}
+        <button onClick={exportSlides} className="p-2 rounded-lg hover:bg-muted transition-colors text-muted-foreground hover:text-foreground" title="ייצוא גיבוי">
+          <Download size={18} />
+        </button>
+        <button onClick={() => fileInputRef.current?.click()} className="p-2 rounded-lg hover:bg-muted transition-colors text-muted-foreground hover:text-foreground" title="ייבוא גיבוי">
+          <Upload size={18} />
+        </button>
+        <input ref={fileInputRef} type="file" accept=".json" className="hidden" onChange={handleImport} />
         <button onClick={handleFullscreen} className="p-2 rounded-lg hover:bg-muted transition-colors text-muted-foreground hover:text-foreground" title="מסך מלא">
           <Maximize size={18} />
         </button>

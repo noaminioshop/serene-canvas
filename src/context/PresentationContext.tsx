@@ -18,6 +18,8 @@ interface PresentationContextType extends PresentationState {
   deleteSlide: (id: number) => void;
   moveSlide: (fromIndex: number, toIndex: number) => void;
   currentSlide: Slide;
+  exportSlides: () => void;
+  importSlides: (file: File) => void;
 }
 
 const PresentationContext = createContext<PresentationContextType | null>(null);
@@ -128,6 +130,38 @@ export function PresentationProvider({ children }: { children: React.ReactNode }
     setCurrentSlideIndex(toIndex);
   }, [saveToDb]);
 
+  const exportSlides = useCallback(() => {
+    const data = JSON.stringify(slides, null, 2);
+    const blob = new Blob([data], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `slides-backup-${new Date().toISOString().slice(0, 10)}.json`;
+    a.click();
+    URL.revokeObjectURL(url);
+    toast.success('הגיבוי הורד בהצלחה');
+  }, [slides]);
+
+  const importSlides = useCallback((file: File) => {
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      try {
+        const imported = JSON.parse(e.target?.result as string) as Slide[];
+        if (!Array.isArray(imported) || imported.length === 0) {
+          toast.error('קובץ לא תקין');
+          return;
+        }
+        setSlides(imported);
+        setCurrentSlideIndex(0);
+        saveToDb(imported);
+        toast.success(`יובאו ${imported.length} שקופיות בהצלחה`);
+      } catch {
+        toast.error('שגיאה בקריאת הקובץ');
+      }
+    };
+    reader.readAsText(file);
+  }, [saveToDb]);
+
   const isOwner = true;
   const currentSlide = slides[currentSlideIndex] || slides[0];
 
@@ -151,6 +185,8 @@ export function PresentationProvider({ children }: { children: React.ReactNode }
         deleteSlide,
         moveSlide,
         currentSlide,
+        exportSlides,
+        importSlides,
       }}
     >
       {children}

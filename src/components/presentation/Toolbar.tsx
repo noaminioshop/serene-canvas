@@ -48,6 +48,13 @@ export function Toolbar({ onOpenThumbnails, onOpenEditor }: ToolbarProps) {
             <Settings size={18} />
           </button>
         )}
+        <button onClick={exportSlides} className="p-2 rounded-lg hover:bg-muted transition-colors text-muted-foreground hover:text-foreground" title="ייצוא גיבוי">
+          <Download size={18} />
+        </button>
+        <button onClick={() => fileInputRef.current?.click()} className="p-2 rounded-lg hover:bg-muted transition-colors text-muted-foreground hover:text-foreground" title="ייבוא גיבוי">
+          <Upload size={18} />
+        </button>
+        <input ref={fileInputRef} type="file" accept=".json" className="hidden" onChange={handleImport} />
         <button onClick={handleFullscreen} className="p-2 rounded-lg hover:bg-muted transition-colors text-muted-foreground hover:text-foreground" title="מסך מלא">
           <Maximize size={18} />
         </button>

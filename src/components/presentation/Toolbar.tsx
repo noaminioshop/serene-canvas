@@ -1,5 +1,6 @@
-import { Sun, Moon, Pencil, Eye, Maximize, ChevronRight, ChevronLeft, LayoutGrid, Settings } from 'lucide-react';
+import { Sun, Moon, Pencil, Eye, Maximize, ChevronRight, ChevronLeft, LayoutGrid, Settings, Download, Upload } from 'lucide-react';
 import { usePresentation } from '@/context/PresentationContext';
+import { useRef } from 'react';
 import { useIsMobile } from '@/hooks/use-mobile';
 
 interface ToolbarProps {

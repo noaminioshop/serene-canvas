@@ -18,6 +18,8 @@ interface PresentationContextType extends PresentationState {
   deleteSlide: (id: number) => void;
   moveSlide: (fromIndex: number, toIndex: number) => void;
   currentSlide: Slide;
+  exportSlides: () => void;
+  importSlides: (file: File) => void;
 }
 
 const PresentationContext = createContext<PresentationContextType | null>(null);

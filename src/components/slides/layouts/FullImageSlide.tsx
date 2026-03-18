@@ -40,7 +40,7 @@ export function FullImageSlide({ slide }: { slide: Slide }) {
               <img
                 src={url}
                 alt={`${slide.title} ${i + 1}`}
-                className="max-w-full max-h-full object-contain"
+                className="max-w-full max-h-full object-contain rounded-2xl"
               />
             </div>
           ))}

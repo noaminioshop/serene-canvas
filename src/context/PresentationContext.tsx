@@ -16,6 +16,7 @@ interface PresentationContextType extends PresentationState {
   updateSlide: (id: number, updates: Partial<Slide>) => void;
   addSlide: (slide: Slide) => void;
   deleteSlide: (id: number) => void;
+  moveSlide: (fromIndex: number, toIndex: number) => void;
   currentSlide: Slide;
 }
 

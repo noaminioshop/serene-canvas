@@ -34,7 +34,7 @@ export function TwoColumnSlide({ slide }: { slide: Slide }) {
             <img
               src={slide.content.imageUrl}
               alt={slide.title}
-              className="max-w-full max-h-full object-contain rounded-3xl shadow-xl"
+              className="max-w-full max-h-full object-contain rounded-2xl shadow-xl"
               style={{ maxHeight: 600 }}
             />
           </div>

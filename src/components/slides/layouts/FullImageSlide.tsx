@@ -22,9 +22,12 @@ export function FullImageSlide({ slide }: { slide: Slide }) {
       style={{ backgroundColor: slide.colors.background, padding: '48px 60px' }}
     >
       {slide.title && (
-        <h1 className="font-bold mb-4 text-center shrink-0" style={{ color: slide.colors.titleText }}>
-          {slide.title}
-        </h1>
+        <>
+          <h1 className="font-bold mb-4 text-center shrink-0" style={{ color: slide.colors.titleText }}>
+            {slide.title}
+          </h1>
+          <div className="w-20 h-1 rounded-full mb-4 shrink-0" style={{ backgroundColor: slide.colors.accentColor }} />
+        </>
       )}
       {slide.subtitle && (
         <h2 className="font-light mb-4 text-center shrink-0" style={{ color: slide.colors.accentColor }}>

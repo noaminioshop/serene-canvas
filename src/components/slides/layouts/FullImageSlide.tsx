@@ -1,11 +1,12 @@
 import { Slide } from '@/types/slides';
 
 export function FullImageSlide({ slide }: { slide: Slide }) {
-  // Combine single imageUrl and imageUrls array
   const allImages = [
     ...(slide.content.imageUrl ? [slide.content.imageUrl] : []),
     ...(slide.content.imageUrls || []),
   ].filter(Boolean);
+
+  const hasText = slide.title || slide.subtitle || slide.content.bodyText;
 
   const getGridClass = (count: number) => {
     if (count <= 1) return 'grid-cols-1';
@@ -17,30 +18,36 @@ export function FullImageSlide({ slide }: { slide: Slide }) {
 
   return (
     <div
-      className="w-full h-full flex flex-col items-center justify-start pt-16 px-40"
-      style={{ backgroundColor: slide.colors.background }}
+      className="w-full h-full flex flex-col items-center justify-start"
+      style={{ backgroundColor: slide.colors.background, padding: '48px 60px' }}
     >
-      <h1 className="font-bold mb-4 text-center" style={{ color: slide.colors.titleText }}>
-        {slide.title}
-      </h1>
+      {slide.title && (
+        <h1 className="font-bold mb-4 text-center shrink-0" style={{ color: slide.colors.titleText }}>
+          {slide.title}
+        </h1>
+      )}
       {slide.subtitle && (
-        <h2 className="font-light mb-4 text-center" style={{ color: slide.colors.accentColor }}>
+        <h2 className="font-light mb-4 text-center shrink-0" style={{ color: slide.colors.accentColor }}>
           {slide.subtitle}
         </h2>
       )}
       {slide.content.bodyText && (
-        <p className="mb-6 max-w-[1000px] text-center" style={{ color: slide.colors.bodyText }}>
+        <p className="mb-6 max-w-[1000px] text-center shrink-0" style={{ color: slide.colors.bodyText }}>
           {slide.content.bodyText}
         </p>
       )}
       {allImages.length > 0 && (
-        <div className={`flex-1 w-full max-w-[1400px] grid ${getGridClass(allImages.length)} gap-6 mb-12`}>
+        <div
+          className={`flex-1 w-full grid ${getGridClass(allImages.length)} gap-6 min-h-0`}
+          style={{ maxWidth: allImages.length === 1 ? '1400px' : '1600px' }}
+        >
           {allImages.map((url, i) => (
-            <div key={i} className="overflow-hidden rounded-3xl flex items-center justify-center">
+            <div key={i} className="flex items-center justify-center min-h-0 overflow-hidden">
               <img
                 src={url}
                 alt={`${slide.title} ${i + 1}`}
-                className="max-w-full max-h-full object-contain rounded-2xl"
+                className="object-contain rounded-2xl"
+                style={{ maxWidth: '100%', maxHeight: '100%', width: 'auto', height: 'auto' }}
               />
             </div>
           ))}

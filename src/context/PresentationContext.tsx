@@ -185,6 +185,8 @@ export function PresentationProvider({ children }: { children: React.ReactNode }
         deleteSlide,
         moveSlide,
         currentSlide,
+        exportSlides,
+        importSlides,
       }}
     >
       {children}

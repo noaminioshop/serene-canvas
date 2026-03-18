@@ -1,12 +1,12 @@
 import { usePresentation } from '@/context/PresentationContext';
 import { ScaledSlide } from '@/components/slides/ScaledSlide';
 import { SlideRenderer } from '@/components/slides/SlideRenderer';
-import { Plus, Trash2 } from 'lucide-react';
+import { Plus, Trash2, ChevronUp, ChevronDown } from 'lucide-react';
 import { SlideLayout } from '@/types/slides';
 import { useIsMobile } from '@/hooks/use-mobile';
 
 export function SlideThumbnails() {
-  const { slides, currentSlideIndex, setCurrentSlideIndex, addSlide, deleteSlide } = usePresentation();
+  const { slides, currentSlideIndex, setCurrentSlideIndex, addSlide, deleteSlide, moveSlide, isDesignMode } = usePresentation();
   const isMobile = useIsMobile();
 
   const handleAddSlide = () => {
@@ -46,24 +46,45 @@ export function SlideThumbnails() {
       </div>
       <div className="flex-1 overflow-y-auto p-2 space-y-2">
         {slides.map((slide, i) => (
-          <button
-            key={slide.id}
-            onClick={() => setCurrentSlideIndex(i)}
-            className={`w-full rounded-xl overflow-hidden border-2 transition-all ${
-              i === currentSlideIndex
-                ? 'border-accent shadow-lg'
-                : 'border-transparent hover:border-border'
-            }`}
-          >
-            <div className="aspect-video relative">
-              <ScaledSlide>
-                <SlideRenderer slide={slide} />
-              </ScaledSlide>
-            </div>
-            <div className="px-2 py-1 text-[10px] text-muted-foreground text-center truncate">
-              {i + 1}. {slide.title}
-            </div>
-          </button>
+          <div key={slide.id} className="relative group">
+            <button
+              onClick={() => setCurrentSlideIndex(i)}
+              className={`w-full rounded-xl overflow-hidden border-2 transition-all ${
+                i === currentSlideIndex
+                  ? 'border-accent shadow-lg'
+                  : 'border-transparent hover:border-border'
+              }`}
+            >
+              <div className="aspect-video relative">
+                <ScaledSlide>
+                  <SlideRenderer slide={slide} />
+                </ScaledSlide>
+              </div>
+              <div className="px-2 py-1 text-[10px] text-muted-foreground text-center truncate">
+                {i + 1}. {slide.title}
+              </div>
+            </button>
+            {isDesignMode && i === currentSlideIndex && (
+              <div className="absolute top-1 left-1 flex flex-col gap-0.5 z-10">
+                <button
+                  onClick={(e) => { e.stopPropagation(); moveSlide(i, i - 1); }}
+                  disabled={i === 0}
+                  className="p-0.5 rounded bg-card/90 border border-border/50 hover:bg-secondary disabled:opacity-30 transition-colors"
+                  title="הזז למעלה"
+                >
+                  <ChevronUp size={12} />
+                </button>
+                <button
+                  onClick={(e) => { e.stopPropagation(); moveSlide(i, i + 1); }}
+                  disabled={i === slides.length - 1}
+                  className="p-0.5 rounded bg-card/90 border border-border/50 hover:bg-secondary disabled:opacity-30 transition-colors"
+                  title="הזז למטה"
+                >
+                  <ChevronDown size={12} />
+                </button>
+              </div>
+            )}
+          </div>
         ))}
       </div>
     </div>

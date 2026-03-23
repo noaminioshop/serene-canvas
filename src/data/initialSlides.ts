@@ -36,7 +36,7 @@ export const initialSlides: Slide[] = [
       quoteText: 'אלי, תן בי את השלווה לקבל את הדברים שאין ביכולתי לשנותם, אומץ לשנות את הדברים אשר ביכולתי, ותבונה להבחין בין השניים',
       quoteAttribution: 'ריינהולד ניבור, 1932',
     },
-    colors: { ...defaultColors, background: warmBg1 },
+    colors: { ...defaultColors, background: warmBg4 },
   },
   // SLIDE 3 - The Home as an Anchor of Quiet
   {

@@ -8,10 +8,12 @@ const defaultColors = {
 };
 
 // Warm background variations for visual variety
-const warmBg1 = '#EDE3D0'; // sandy warm
-const warmBg2 = '#E8DFD0'; // taupe
-const warmBg3 = '#F2E8DA'; // cream
-const warmBg4 = '#E5DACE'; // warm stone
+const warmBg1 = '#E8EDDF'; // soft sage green
+const warmBg2 = '#F2E8DA'; // warm cream
+const warmBg3 = '#E4DFCF'; // warm linen
+const warmBg4 = '#DDE8D6'; // light mint green
+const warmBg5 = '#EDE3D0'; // sandy warm
+const warmBg6 = '#E0E8DB'; // pale olive green
 
 export const initialSlides: Slide[] = [
   // SLIDE 1 - Title Slide (with video placeholder)

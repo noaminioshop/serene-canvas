@@ -93,7 +93,7 @@ export const initialSlides: Slide[] = [
       ],
       imageUrl: 'https://images.unsplash.com/photo-1545241047-6083a3684587?w=800',
     },
-    colors: { ...defaultColors },
+    colors: { ...defaultColors, background: warmBg4 },
   },
   // SLIDE 6 - Natural Light and Atmosphere
   {

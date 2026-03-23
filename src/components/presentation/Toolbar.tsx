@@ -1,6 +1,6 @@
-import { Sun, Moon, Pencil, Eye, Maximize, ChevronRight, ChevronLeft, LayoutGrid, Settings, Download, Upload } from 'lucide-react';
+import { Sun, Moon, Pencil, Eye, Maximize, ChevronRight, ChevronLeft, LayoutGrid, Settings, Download, Upload, Lock, Unlock } from 'lucide-react';
 import { usePresentation } from '@/context/PresentationContext';
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import { useIsMobile } from '@/hooks/use-mobile';
 
 interface ToolbarProps {
@@ -12,6 +12,7 @@ export function Toolbar({ onOpenThumbnails, onOpenEditor }: ToolbarProps) {
   const { isDarkMode, toggleDarkMode, isDesignMode, toggleDesignMode, currentSlideIndex, slides, isOwner, exportSlides, importSlides } = usePresentation();
   const isMobile = useIsMobile();
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const [isUnlocked, setIsUnlocked] = useState(false);
 
   const handleImport = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -29,6 +30,17 @@ export function Toolbar({ onOpenThumbnails, onOpenEditor }: ToolbarProps) {
     }
   };
 
+  const handleUnlock = () => {
+    if (isUnlocked) {
+      setIsUnlocked(false);
+      return;
+    }
+    const password = prompt('הזן סיסמה:');
+    if (password === '185593') {
+      setIsUnlocked(true);
+    }
+  };
+
   return (
     <div className="h-12 md:h-14 flex items-center justify-between px-3 md:px-6 bg-card/80 backdrop-blur-xl border-b border-border/50 shrink-0">
       <div className="flex items-center gap-2">
@@ -38,41 +50,56 @@ export function Toolbar({ onOpenThumbnails, onOpenEditor }: ToolbarProps) {
         {currentSlideIndex + 1} / {slides.length}
       </div>
       <div className="flex items-center gap-0.5 md:gap-1">
-        {isMobile && isOwner && onOpenThumbnails && (
-          <button onClick={onOpenThumbnails} className="p-2 rounded-lg hover:bg-muted transition-colors text-muted-foreground hover:text-foreground" title="שקופיות">
-            <LayoutGrid size={18} />
-          </button>
-        )}
-        {isMobile && isOwner && onOpenEditor && (
-          <button onClick={onOpenEditor} className="p-2 rounded-lg hover:bg-muted transition-colors text-muted-foreground hover:text-foreground" title="עריכה">
-            <Settings size={18} />
-          </button>
-        )}
-        <button onClick={exportSlides} className="p-2 rounded-lg hover:bg-muted transition-colors text-muted-foreground hover:text-foreground" title="ייצוא גיבוי">
-          <Download size={18} />
-        </button>
-        <button onClick={() => fileInputRef.current?.click()} className="p-2 rounded-lg hover:bg-muted transition-colors text-muted-foreground hover:text-foreground" title="ייבוא גיבוי">
-          <Upload size={18} />
-        </button>
-        <input ref={fileInputRef} type="file" accept=".json" className="hidden" onChange={handleImport} />
         <button onClick={handleFullscreen} className="p-2 rounded-lg hover:bg-muted transition-colors text-muted-foreground hover:text-foreground" title="מסך מלא">
           <Maximize size={18} />
         </button>
         <button onClick={toggleDarkMode} className="p-2 rounded-lg hover:bg-muted transition-colors text-muted-foreground hover:text-foreground" title={isDarkMode ? 'מצב בהיר' : 'מצב כהה'}>
           {isDarkMode ? <Sun size={18} /> : <Moon size={18} />}
         </button>
-        {!isMobile && isOwner && (
-          <button
-            onClick={toggleDesignMode}
-            className="p-2 rounded-lg hover:bg-muted transition-colors"
-            title={isDesignMode ? 'מצב צפייה' : 'מצב עיצוב'}
-            style={{
-              color: isDesignMode ? 'hsl(var(--accent))' : undefined,
-              backgroundColor: isDesignMode ? 'hsl(var(--accent) / 0.15)' : undefined,
-            }}
-          >
-            {isDesignMode ? <Eye size={18} /> : <Pencil size={18} />}
-          </button>
+        <button
+          onClick={handleUnlock}
+          className="p-2 rounded-lg hover:bg-muted transition-colors"
+          title={isUnlocked ? 'נעל כלים' : 'פתח כלים'}
+          style={{
+            color: isUnlocked ? 'hsl(var(--accent))' : undefined,
+            backgroundColor: isUnlocked ? 'hsl(var(--accent) / 0.15)' : undefined,
+          }}
+        >
+          {isUnlocked ? <Unlock size={18} /> : <Eye size={18} />}
+        </button>
+        {isUnlocked && (
+          <>
+            {isMobile && isOwner && onOpenThumbnails && (
+              <button onClick={onOpenThumbnails} className="p-2 rounded-lg hover:bg-muted transition-colors text-muted-foreground hover:text-foreground" title="שקופיות">
+                <LayoutGrid size={18} />
+              </button>
+            )}
+            {isMobile && isOwner && onOpenEditor && (
+              <button onClick={onOpenEditor} className="p-2 rounded-lg hover:bg-muted transition-colors text-muted-foreground hover:text-foreground" title="עריכה">
+                <Settings size={18} />
+              </button>
+            )}
+            <button onClick={exportSlides} className="p-2 rounded-lg hover:bg-muted transition-colors text-muted-foreground hover:text-foreground" title="ייצוא גיבוי">
+              <Download size={18} />
+            </button>
+            <button onClick={() => fileInputRef.current?.click()} className="p-2 rounded-lg hover:bg-muted transition-colors text-muted-foreground hover:text-foreground" title="ייבוא גיבוי">
+              <Upload size={18} />
+            </button>
+            <input ref={fileInputRef} type="file" accept=".json" className="hidden" onChange={handleImport} />
+            {!isMobile && isOwner && (
+              <button
+                onClick={toggleDesignMode}
+                className="p-2 rounded-lg hover:bg-muted transition-colors"
+                title={isDesignMode ? 'מצב צפייה' : 'מצב עיצוב'}
+                style={{
+                  color: isDesignMode ? 'hsl(var(--accent))' : undefined,
+                  backgroundColor: isDesignMode ? 'hsl(var(--accent) / 0.15)' : undefined,
+                }}
+              >
+                {isDesignMode ? <Eye size={18} /> : <Pencil size={18} />}
+              </button>
+            )}
+          </>
         )}
       </div>
     </div>

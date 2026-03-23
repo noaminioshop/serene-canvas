@@ -136,7 +136,7 @@ export const initialSlides: Slide[] = [
       ],
       imageUrl: 'https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=800',
     },
-    colors: { ...defaultColors },
+    colors: { ...defaultColors, background: warmBg2 },
   },
   // SLIDE 8 - Materials and Textures from Nature
   {

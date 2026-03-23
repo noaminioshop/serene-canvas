@@ -52,7 +52,7 @@ export const initialSlides: Slide[] = [
       ],
       imageUrl: 'https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?w=800',
     },
-    colors: { ...defaultColors, background: warmBg2 },
+    colors: { ...defaultColors, background: warmBg5 },
   },
   // SLIDE 4 - A Calming Color Palette
   {

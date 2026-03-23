@@ -262,7 +262,7 @@ export const initialSlides: Slide[] = [
         ['חומרים', 'פלסטיק, מתכת קרה, חומרים סינתטיים', 'עץ, פשתן, כותנה ואבן'],
       ],
     },
-    colors: { ...defaultColors, background: warmBg4 },
+    colors: { ...defaultColors, background: warmBg5 },
   },
   // SLIDE 14 - Closing Slide
   {

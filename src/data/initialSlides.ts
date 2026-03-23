@@ -232,7 +232,7 @@ export const initialSlides: Slide[] = [
         'יום קסום בממלכה של המלכה ⚜️',
       ],
     },
-    colors: { ...defaultColors },
+    colors: { ...defaultColors, background: warmBg2 },
   },
   // SLIDE 12 - Rosh Chodesh Nisan
   {

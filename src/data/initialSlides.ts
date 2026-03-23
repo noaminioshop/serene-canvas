@@ -76,7 +76,7 @@ export const initialSlides: Slide[] = [
         },
       ],
     },
-    colors: { ...defaultColors, bodyText: '#7F8C8D' },
+    colors: { ...defaultColors, background: warmBg3, bodyText: '#7F8C8D' },
   },
   // SLIDE 5 - Bringing Nature Home
   {

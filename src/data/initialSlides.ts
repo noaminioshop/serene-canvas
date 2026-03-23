@@ -179,7 +179,7 @@ export const initialSlides: Slide[] = [
       ],
       imageUrl: 'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=800',
     },
-    colors: { ...defaultColors },
+    colors: { ...defaultColors, background: warmBg4 },
   },
   // SLIDE 10 - Design for All the Senses
   {

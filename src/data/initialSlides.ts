@@ -291,6 +291,6 @@ export const initialSlides: Slide[] = [
         'unsplash.com',
       ],
     },
-    colors: { ...defaultColors },
+    colors: { ...defaultColors, background: warmBg2 },
   },
 ];

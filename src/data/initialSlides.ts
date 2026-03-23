@@ -277,7 +277,7 @@ export const initialSlides: Slide[] = [
         'your_design_peace | www.homedesignpeace.co.il',
       ],
     },
-    colors: { ...defaultColors, background: warmBg1, titleText: '#8FAD88', bodyText: '#7F8C8D' },
+    colors: { ...defaultColors, background: warmBg4, titleText: '#8FAD88', bodyText: '#7F8C8D' },
   },
   // SLIDE 15 - Image Sources
   {

@@ -246,7 +246,7 @@ export const initialSlides: Slide[] = [
       bodyText: 'ניסן – חודש הגאולה, חודש האביב. זמן של התחלות חדשות, ניקיון הבית והנפש.',
       imageUrl: 'https://images.unsplash.com/photo-1490750967868-88aa4f44baee?w=800',
     },
-    colors: { ...defaultColors, background: warmBg3 },
+    colors: { ...defaultColors, background: warmBg1 },
   },
   // SLIDE 13 - From Stress to Serenity: Comparison
   {

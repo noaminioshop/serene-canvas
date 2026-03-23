@@ -112,11 +112,11 @@
 .slide-content {
   font-family: 'Assistant', sans-serif;
 }
-.slide-content h1 { font-size: 72px; line-height: 1.1; }
-.slide-content h2 { font-size: 54px; line-height: 1.2; }
-.slide-content h3 { font-size: 40px; line-height: 1.3; }
-.slide-content p { font-size: 28px; line-height: 1.6; }
-.slide-content li { font-size: 26px; line-height: 1.8; }
-.slide-content .text-small { font-size: 22px; }
-.slide-content .text-large { font-size: 36px; }
-.slide-content .text-quote { font-size: 38px; font-style: italic; line-height: 1.5; }
+.slide-content h1 { font-size: 82px; line-height: 1.1; }
+.slide-content h2 { font-size: 62px; line-height: 1.2; }
+.slide-content h3 { font-size: 46px; line-height: 1.3; }
+.slide-content p { font-size: 32px; line-height: 1.6; }
+.slide-content li { font-size: 30px; line-height: 1.8; }
+.slide-content .text-small { font-size: 26px; }
+.slide-content .text-large { font-size: 40px; }
+.slide-content .text-quote { font-size: 44px; font-style: italic; line-height: 1.5; }

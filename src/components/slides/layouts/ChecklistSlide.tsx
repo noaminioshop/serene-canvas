@@ -30,7 +30,7 @@ export function ChecklistSlide({ slide }: { slide: Slide }) {
               >
                 <span style={{ color: slide.colors.accentColor, fontSize: 18 }}>✓</span>
               </div>
-              <p className="leading-relaxed" style={{ color: slide.colors.bodyText, fontSize: 26 }}>{item}</p>
+              <p className="leading-relaxed" style={{ color: slide.colors.bodyText, fontSize: 30 }}>{item}</p>
             </div>
           ))}
         </div>
@@ -43,7 +43,7 @@ export function ChecklistSlide({ slide }: { slide: Slide }) {
               >
                 <span style={{ color: slide.colors.accentColor, fontSize: 18 }}>✓</span>
               </div>
-              <p className="leading-relaxed" style={{ color: slide.colors.bodyText, fontSize: 26 }}>{item}</p>
+              <p className="leading-relaxed" style={{ color: slide.colors.bodyText, fontSize: 30 }}>{item}</p>
             </div>
           ))}
         </div>

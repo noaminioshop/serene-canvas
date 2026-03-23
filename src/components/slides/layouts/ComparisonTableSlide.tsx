@@ -30,7 +30,7 @@ export function ComparisonTableSlide({ slide }: { slide: Slide }) {
                   style={{
                     backgroundColor: ri % 2 === 0 ? `${slide.colors.accentColor}10` : 'transparent',
                     color: slide.colors.bodyText,
-                    fontSize: 26,
+                    fontSize: 30,
                     borderBottom: `1px solid ${slide.colors.accentColor}20`,
                   }}
                 >

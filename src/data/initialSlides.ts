@@ -1,11 +1,17 @@
 import { Slide } from '@/types/slides';
 
 const defaultColors = {
-  background: '#F5F0E8',
+  background: '#F0E8D8',
   titleText: '#2C3E50',
   bodyText: '#34495E',
   accentColor: '#8FAD88',
 };
+
+// Warm background variations for visual variety
+const warmBg1 = '#EDE3D0'; // sandy warm
+const warmBg2 = '#E8DFD0'; // taupe
+const warmBg3 = '#F2E8DA'; // cream
+const warmBg4 = '#E5DACE'; // warm stone
 
 export const initialSlides: Slide[] = [
   // SLIDE 1 - Title Slide (with video placeholder)

@@ -8,10 +8,12 @@ const defaultColors = {
 };
 
 // Warm background variations for visual variety
-const warmBg1 = '#EDE3D0'; // sandy warm
-const warmBg2 = '#E8DFD0'; // taupe
-const warmBg3 = '#F2E8DA'; // cream
-const warmBg4 = '#E5DACE'; // warm stone
+const warmBg1 = '#E8EDDF'; // soft sage green
+const warmBg2 = '#F2E8DA'; // warm cream
+const warmBg3 = '#E4DFCF'; // warm linen
+const warmBg4 = '#DDE8D6'; // light mint green
+const warmBg5 = '#EDE3D0'; // sandy warm
+const warmBg6 = '#E0E8DB'; // pale olive green
 
 export const initialSlides: Slide[] = [
   // SLIDE 1 - Title Slide (with video placeholder)
@@ -34,7 +36,7 @@ export const initialSlides: Slide[] = [
       quoteText: 'אלי, תן בי את השלווה לקבל את הדברים שאין ביכולתי לשנותם, אומץ לשנות את הדברים אשר ביכולתי, ותבונה להבחין בין השניים',
       quoteAttribution: 'ריינהולד ניבור, 1932',
     },
-    colors: { ...defaultColors, background: warmBg1 },
+    colors: { ...defaultColors, background: warmBg4 },
   },
   // SLIDE 3 - The Home as an Anchor of Quiet
   {
@@ -50,7 +52,7 @@ export const initialSlides: Slide[] = [
       ],
       imageUrl: 'https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?w=800',
     },
-    colors: { ...defaultColors, background: warmBg2 },
+    colors: { ...defaultColors, background: warmBg5 },
   },
   // SLIDE 4 - A Calming Color Palette
   {
@@ -76,7 +78,7 @@ export const initialSlides: Slide[] = [
         },
       ],
     },
-    colors: { ...defaultColors, background: warmBg3, bodyText: '#7F8C8D' },
+    colors: { ...defaultColors, background: warmBg6, bodyText: '#7F8C8D' },
   },
   // SLIDE 5 - Bringing Nature Home
   {
@@ -119,7 +121,7 @@ export const initialSlides: Slide[] = [
         },
       ],
     },
-    colors: { ...defaultColors, background: warmBg1, bodyText: '#7F8C8D' },
+    colors: { ...defaultColors, background: warmBg5, bodyText: '#7F8C8D' },
   },
   // SLIDE 7 - Less is More
   {
@@ -136,7 +138,7 @@ export const initialSlides: Slide[] = [
       ],
       imageUrl: 'https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=800',
     },
-    colors: { ...defaultColors, background: warmBg2 },
+    colors: { ...defaultColors, background: warmBg6 },
   },
   // SLIDE 8 - Materials and Textures from Nature
   {
@@ -162,7 +164,7 @@ export const initialSlides: Slide[] = [
         },
       ],
     },
-    colors: { ...defaultColors, background: warmBg3, bodyText: '#7F8C8D' },
+    colors: { ...defaultColors, background: warmBg1, bodyText: '#7F8C8D' },
   },
   // SLIDE 9 - The Personal Retreat Corner
   {
@@ -205,7 +207,7 @@ export const initialSlides: Slide[] = [
         },
       ],
     },
-    colors: { ...defaultColors, background: warmBg1, bodyText: '#7F8C8D' },
+    colors: { ...defaultColors, background: warmBg6, bodyText: '#7F8C8D' },
   },
   // SLIDE 11 - Morning Routine Checklist
   {
@@ -232,7 +234,7 @@ export const initialSlides: Slide[] = [
         'יום קסום בממלכה של המלכה ⚜️',
       ],
     },
-    colors: { ...defaultColors, background: warmBg2 },
+    colors: { ...defaultColors, background: warmBg4 },
   },
   // SLIDE 12 - Rosh Chodesh Nisan
   {
@@ -244,7 +246,7 @@ export const initialSlides: Slide[] = [
       bodyText: 'ניסן – חודש הגאולה, חודש האביב. זמן של התחלות חדשות, ניקיון הבית והנפש.',
       imageUrl: 'https://images.unsplash.com/photo-1490750967868-88aa4f44baee?w=800',
     },
-    colors: { ...defaultColors, background: warmBg3 },
+    colors: { ...defaultColors, background: warmBg1 },
   },
   // SLIDE 13 - From Stress to Serenity: Comparison
   {
@@ -260,7 +262,7 @@ export const initialSlides: Slide[] = [
         ['חומרים', 'פלסטיק, מתכת קרה, חומרים סינתטיים', 'עץ, פשתן, כותנה ואבן'],
       ],
     },
-    colors: { ...defaultColors, background: warmBg4 },
+    colors: { ...defaultColors, background: warmBg5 },
   },
   // SLIDE 14 - Closing Slide
   {
@@ -275,7 +277,7 @@ export const initialSlides: Slide[] = [
         'your_design_peace | www.homedesignpeace.co.il',
       ],
     },
-    colors: { ...defaultColors, background: warmBg1, titleText: '#8FAD88', bodyText: '#7F8C8D' },
+    colors: { ...defaultColors, background: warmBg4, titleText: '#8FAD88', bodyText: '#7F8C8D' },
   },
   // SLIDE 15 - Image Sources
   {
@@ -291,6 +293,6 @@ export const initialSlides: Slide[] = [
         'unsplash.com',
       ],
     },
-    colors: { ...defaultColors, background: warmBg2 },
+    colors: { ...defaultColors, background: warmBg6 },
   },
 ];

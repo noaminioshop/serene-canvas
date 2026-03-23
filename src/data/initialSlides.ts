@@ -207,7 +207,7 @@ export const initialSlides: Slide[] = [
         },
       ],
     },
-    colors: { ...defaultColors, background: warmBg1, bodyText: '#7F8C8D' },
+    colors: { ...defaultColors, background: warmBg6, bodyText: '#7F8C8D' },
   },
   // SLIDE 11 - Morning Routine Checklist
   {
